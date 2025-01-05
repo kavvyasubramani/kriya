@@ -24,15 +24,15 @@ export default function TeamGrid({ teamMembers = [] }) {
         {teamMembers.map((member, index) => (
           <div
             key={index}
-            className={`relative overflow-hidden text-center w-44 h-44 p-0 transition-all duration-300 ease-in-out rounded-md ${'bg-gradient-to-br from-purple-300 to-white   shadow-custom mb-3'
-              }`}
+            className={`relative overflow-hidden text-center w-44 h-44 p-0  rounded-md bg-gradient-to-br from-purple-300 to-white   shadow-custom mb-3 ${hoveredMember===member?'rounded-full transition-all duration-300 ease-in-out':''}'
+              `}
           >
             <div className="relative w-full h-full"
             
             >
               <motion.div className="absolute bottom-0 left-0 w-2/3 h-2/3 object-cover"
                 initial={{ scale: 1 }} // Initial scale
-                whileHover={{ width: "100%", height: "100%" }} // Scale up on hover
+                whileHover={{ width: "100%", height: "100%", }} // Scale up on hover
                 //  transition={{ duration: 0.4,  ease: [0.25, 0.1, 0.25, 1] }}
                 transition={{
                   type: "spring", // Spring transition
@@ -45,7 +45,7 @@ export default function TeamGrid({ teamMembers = [] }) {
               >
                 <img
                   src={member.image}
-                  className="w-full h-full mix-blend-normal "
+                  className={`w-full h-full mix-blend-normal ${hoveredMember===member?'blur-sm':''}`}
                   alt={member.name}
                 />
               </motion.div>
@@ -55,9 +55,9 @@ export default function TeamGrid({ teamMembers = [] }) {
               // initial={{ opacity: 1 }} // Initial state for animation
               >
                 <div
-                  className={`absolute ${hoveredMember === member ? 'bottom-1/2 left-1/2 transform -translate-x-2/3 translate-y-2/3 bg-white bg-opacity-30 backdrop-blur-lg' : 'bottom-[79%] right-0'} p-1 text-right bg-purple-400 transition-all duration-300 ease-in-out`}
+                  className={`absolute ${hoveredMember === member ? 'bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 bg-white bg-opacity-30 backdrop-blur-lg w-auto' : 'bottom-[79%] right-0'} p-1 text-center bg-purple-400 transition-all duration-300 ease-in-out`}
                 >
-                  <div className={`text-tiny font-bold ${hoveredMember === member ?'text-slate-950': 'text-purple-700' }mb-0`}>
+                  <div className={`text-tiny font-bold text-nowrap${hoveredMember === member ?'text-slate-950  text-[9.5px] text-nowrap': 'text-purple-700' }mb-0`}>
                     {member.role}
                   </div>
                 </div>
@@ -65,7 +65,7 @@ export default function TeamGrid({ teamMembers = [] }) {
                 <div
                   className={`absolute ${hoveredMember === member ? 'bottom-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2   bg-white bg-opacity-30 backdrop-blur-sm' : 'bottom-[65%] right-0'} py-1 px-2 text-right bg-white inline-block transition-all duration-300 ease-in-out`}
                 >
-                  <div className="text-mid text-nowrap font-bold text-black">
+                  <div className={`text-tiny text-nowrap font-bold text-purple-700 ${hoveredMember === member ?' text-[12px] text-slate-950 text-nowrap': ''} `}>
                     {member.name}
                   </div>
                 </div>
