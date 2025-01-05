@@ -10,7 +10,7 @@ export default function TeamGrid({ teamMembers = [] }) {
   const [hoveredMember, setHoveredMember] = useState(null);
   return (
     <div className="font- bg-gray-200 py-3 pl-10 pr-0 mr-[-0.7rem]">
-      <div className="text-black text-left py-1 mb-11">
+      <div className="text-black text-left py-1 mb-8">
         <h1 className="text-4xl font-bold tracking-wide bf">
           MEET OUR TEAM{' '}
           <sup className="text-mid relative -top-4">( KRIYA 2025 )</sup>
@@ -24,13 +24,13 @@ export default function TeamGrid({ teamMembers = [] }) {
         {teamMembers.map((member, index) => (
           <div
             key={index}
-            className={`relative overflow-hidden text-center w-44 h-44 p-0  rounded-md bg-gradient-to-br from-purple-300 to-white   shadow-custom mb-3 ${hoveredMember===member?'rounded-full transition-all duration-300 ease-in-out':''}'
+            className={`relative overflow-hidden text-center w-48 h-52 p-0   bg-gradient-to-br from-purple-300 to-white   shadow-custom mb-3 rounded-2xl ${hoveredMember===member?' transition-all duration-300 ease-in-out':''}'
               `}
           >
             <div className="relative w-full h-full"
             
             >
-              <motion.div className="absolute bottom-0 left-0 w-2/3 h-2/3 object-cover"
+              <motion.div className="absolute bottom-0 left-0 aspect-[8/9] w-2/3 object-cover"
                 initial={{ scale: 1 }} // Initial scale
                 whileHover={{ width: "100%", height: "100%", }} // Scale up on hover
                 //  transition={{ duration: 0.4,  ease: [0.25, 0.1, 0.25, 1] }}
@@ -55,24 +55,23 @@ export default function TeamGrid({ teamMembers = [] }) {
               // initial={{ opacity: 1 }} // Initial state for animation
               >
                 <div
-                  className={`absolute ${hoveredMember === member ? 'bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 bg-white bg-opacity-30 backdrop-blur-lg w-auto' : 'bottom-[79%] right-0'} p-1 text-center bg-purple-400 transition-all duration-300 ease-in-out`}
+                  className={`absolute ${hoveredMember === member ? 'bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 bg-white bg-opacity-30 backdrop-blur-lg w-auto' : 'bottom-[85%] right-0'} p-1 text-center bg-purple-400 transition-all duration-300 ease-in-out`}
                 >
-                  <div className={`text-tiny font-bold text-nowrap${hoveredMember === member ?'text-slate-950  text-[9.5px] text-nowrap': 'text-purple-700' }mb-0`}>
+                  <div className={`text-[10px] font-bold text-nowrap${hoveredMember === member ?'text-slate-950  text-[12px] text-nowrap': 'text-purple-700' }`}>
                     {member.role}
                   </div>
                 </div>
 
                 <div
-                  className={`absolute ${hoveredMember === member ? 'bottom-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2   bg-white bg-opacity-30 backdrop-blur-sm' : 'bottom-[65%] right-0'} py-1 px-2 text-right bg-white inline-block transition-all duration-300 ease-in-out`}
+                  className={`absolute ${hoveredMember === member ? 'bottom-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2   bg-white bg-opacity-30 backdrop-blur-sm' : 'bottom-[72%] right-2'} py-1 px-2 text-right bg-white inline-block transition-all duration-300 ease-in-out`}
                 >
-                  <div className={`text-tiny text-nowrap font-bold text-purple-700 ${hoveredMember === member ?' text-[12px] text-slate-950 text-nowrap': ''} `}>
+                  <div className={`text-[11px] text-nowrap font-bold text-purple-700 ${hoveredMember === member ?' text-[13px] text-slate-950 text-nowrap': ''} `}>
                     {member.name}
                   </div>
                 </div>
 
               </div>
               {/* )} */}
-
               <div className=" absolute bottom-0 right-0 h-0 w-0 border-l-[15px] border-l-transparent border-b-[15px] border-b-black">
 
               </div>
