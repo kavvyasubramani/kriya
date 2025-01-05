@@ -1,13 +1,49 @@
 'use client';
 import 'tailwindcss/tailwind.css';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'; // Icons for arrows
+import { RiArrowRightWideLine, RiArrowLeftWideLine } from "react-icons/ri";
 export default function TeamGrid({ teamMembers = [] }) {
+  const CARDS_PER_SLIDE=15;
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [hoveredMember, setHoveredMember] = useState(null); // State to track hovered member
+
+  const totalSlides = Math.ceil(teamMembers.length / CARDS_PER_SLIDE);
+
+  // Automatic slide change every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prevSlide) =>
+        prevSlide < totalSlides - 1 ? prevSlide + 1 : 0
+      );
+    }, 5000); // Change slide every 5 seconds
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, [totalSlides]);
+
+  const handleNextSlide = () => {
+    setCurrentSlide((prevSlide) =>
+      prevSlide < totalSlides - 1 ? prevSlide + 1 : 0
+    );
+  };
+
+  const handlePrevSlide = () => {
+    setCurrentSlide((prevSlide) =>
+      prevSlide > 0 ? prevSlide - 1 : totalSlides - 1
+    );
+  };
+
+  const getCurrentSlideMembers = () => {
+    const start = currentSlide * CARDS_PER_SLIDE;
+    const end = start + CARDS_PER_SLIDE;
+    return teamMembers.slice(start, end);
+  };
+
 
   const handleMouseEnterButton = (index) => setHoveredIndex(index);
   const handleMouseLeaveButton = () => setHoveredIndex(null);
-  const [hoveredMember, setHoveredMember] = useState(null);
+ 
   return (
     <div className="font- bg-gray-200 py-3 pl-10 pr-0 mr-[-0.7rem]">
       <div className="text-black text-left py-1 mb-8">
@@ -16,12 +52,27 @@ export default function TeamGrid({ teamMembers = [] }) {
           <sup className="text-mid relative -top-4">( KRIYA 2025 )</sup>
         </h1>
       </div>
-
-      <div
-        className="grid grid-cols-auto-fill gap-y-4 gap-x-[0.5rem] relative"
-        style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' }}
-      >
-        {teamMembers.map((member, index) => (
+      <div className="relative flex items-center">
+        {/* Left Arrow */}
+        <button
+  onClick={handlePrevSlide}
+  className="absolute left-[-0.5rem] z-10 bg-transparent hover:bg-grey-200 text-white hover:text-purple-500 p-2 rounded-full"
+  style={{ top: '50%', transform: 'translateY(-50%)' }} // Updated left spacing
+>
+<RiArrowLeftWideLine size={64} />
+</button>
+<div
+  className="grid grid-cols-auto-fill gap-y-4 gap-x-[0.5rem] relative"
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+    gap: "1rem",
+    marginLeft: "4.5rem", // Cards start 0.5rem after the left arrow
+    marginRight: "4.5rem", // Cards end 0.5rem before the right arrow
+    width: "calc(100% - 1rem)", // Adjust total width for spacing
+  }}
+>
+        {getCurrentSlideMembers().map((member, index) => (
           <div
             key={index}
             className={`relative overflow-hidden text-center w-48 h-52 p-0   bg-gradient-to-br from-purple-300 to-white   shadow-custom mb-3 rounded-2xl ${hoveredMember===member?' transition-all duration-300 ease-in-out':''}'
@@ -90,6 +141,16 @@ export default function TeamGrid({ teamMembers = [] }) {
           </div>
         ))}
       </div>
+      <button
+  onClick={handleNextSlide}
+  className="absolute right-[4rem] z-10 bg-transparent hover:bg-gray-200 text-white hover:text-purple-500 p-0" // Reduced padding for thinner button
+  style={{ top: '50%', transform: 'translateY(-50%)' }}
+>
+  <RiArrowRightWideLine size={64} />
+</button>
+
+      </div>
+
     </div>
 
   );
